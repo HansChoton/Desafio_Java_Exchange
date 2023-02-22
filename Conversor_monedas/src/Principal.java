@@ -6,7 +6,7 @@ public class Principal {
 		
 		JOptionPane.showMessageDialog(null, "+´>Bienvenido, disfruta tu estancia<´+");
 		Ventana ventanaPpal = new Ventana();
-		ventanaPpal.setVisible(true);//se hace visible la ventana
+		ventanaPpal.setVisible(true);//se hace visible el frame
 		
 		
 	}
