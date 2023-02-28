@@ -142,12 +142,10 @@ public class iniciarComponentes extends JFrame {
 		ActionListener accionbtnconvertir = new ActionListener() {	
 			
 			@Override
-			public void actionPerformed(ActionEvent e) {
-				double cantidadConvertida;			
+			public void actionPerformed(ActionEvent e) {						
 				double cantidadMonedas = Double.parseDouble(qtyMonedas.getText());
 				if(listaDeOpciones.getSelectedItem().toString() == "Soles a Dolares") {					
-					cantidadConvertida = cantidadMonedas/3.82;
-					JOptionPane.showMessageDialog(null,"La cantidad que obtendrás es:  " + String.format("%.2f",cantidadConvertida)+ " $USD");					
+					JOptionPane.showMessageDialog(null,"La cantidad que obtendrás es:  " + String.format("%.2f",cantidadMonedas/3.82)+ " $USD");					
 				}
 			}
 		};
