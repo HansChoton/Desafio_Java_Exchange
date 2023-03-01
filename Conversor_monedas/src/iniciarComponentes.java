@@ -15,7 +15,8 @@ public class iniciarComponentes extends JFrame {
 
 	private JPanel panel;	
 	private JComboBox listaDeOpciones;
-	private JTextField qtyMonedas;	
+	private JTextField qtyMonedas;
+	private JTextArea titleMontoIngresar;
 	
 	
 	public iniciarComponentes() {
@@ -39,14 +40,12 @@ public class iniciarComponentes extends JFrame {
 		panel = new JPanel(); // Creacion de un panel
 		this.getContentPane().add(panel);// obtener contenido de la ventana y le agregamos el panel
 		panel.setLayout(null);// se elimina toda configuracion por defecto del panel
-		/*JLabel intro = new JLabel(new ImageIcon("intro.jpg"));
-		intro.setBounds(0, 0, 600, 400);		
-		panel.add(intro);*/
+		
 	}
 
 	private void iniciarEtiquetas() {	
 		
-		//indicaciones iniciales
+		// indicaciones iniciales
 		JTextArea seleccion = new JTextArea();		
 		seleccion.setText("Selecciona la aplicación de conversión que usarás");
 		seleccion.setBounds(20, 20, 150, 100);
@@ -59,7 +58,7 @@ public class iniciarComponentes extends JFrame {
 		panel.add(seleccion);
 		
 		
-		//texto de boton seleccion conversor de monedas
+		// texto de boton seleccion conversor de monedas
 		JLabel titleBotonMoneda = new JLabel();
 		titleBotonMoneda.setText("Conversor Moneda");		
 		titleBotonMoneda.setBounds(52, 215, 98, 20);
@@ -67,30 +66,28 @@ public class iniciarComponentes extends JFrame {
 		panel.add(titleBotonMoneda);
 		
 		
-		//texto de boton seleccion conversor de temperatura
+		// texto de boton seleccion conversor de temperatura
 		JLabel titleBotonTemp = new JLabel();
 		titleBotonTemp.setText("Conversor Temperatura");
 		titleBotonTemp.setBounds(38,315, 112, 20);
 		titleBotonTemp.setFont(new Font("century", 0, 10));
 		panel.add(titleBotonTemp);
 		
-		//texto de ingreso cantidad de dinero
-		JTextArea titleMontoIngresar = new JTextArea();		
-		titleMontoIngresar.setText("Cantidad de dinero que deseas convertir:");
+		// texto de ingreso cantidad de dinero
+		titleMontoIngresar = new JTextArea();		
+		titleMontoIngresar.setText(" ");
+		titleMontoIngresar.setEditable(false);
 		titleMontoIngresar.setBounds(285, 75, 290, 20);		
 		titleMontoIngresar.setOpaque(false);		
-		titleMontoIngresar.setForeground(Color.black);
+		titleMontoIngresar.setForeground(Color.white);
 		titleMontoIngresar.setFont(new Font("century", 3, 14));
 		panel.add(titleMontoIngresar);		
 		
 		/*
-		 * JLabel conversorMonedas = new JLabel(new ImageIcon("Monedas.jpg"));//creando
-		 * nueva etiqueta panel.add(conversorMonedas);//agregando la etiqueta al panel
-		 * conversorMonedas.setBounds(0, 0, 600, 200);//posicionando la etiqueta
+		 * 
 		 * 
 		 * JLabel conversorTemperatura = new JLabel(new ImageIcon("Temperatura.jpg"));
-		 * panel.add(conversorTemperatura); conversorTemperatura.setBounds(0, 200, 600,
-		 * 200);
+		 * panel.add(conversorTemperatura); conversorTemperatura.setBounds(184, 10, 490, 340);
 		 */
 	}
 	
@@ -101,13 +98,7 @@ public class iniciarComponentes extends JFrame {
 				"Dolares a Soles", "Euros a Soles","Libras Esterlinas a Soles","Yen a Soles","Won Coreano a Soles"};
 		listaDeOpciones = new JComboBox(divisas);
 		listaDeOpciones.setBounds(340, 160, 180, 20);
-		
-		if (qtyMonedas.getText()=="") {
-			listaDeOpciones.setVisible(false);
-		}else {
-			listaDeOpciones.setVisible(true);
-		}
-			
+		listaDeOpciones.setVisible(false);
 		panel.add(listaDeOpciones);
 		
 	}
@@ -115,14 +106,19 @@ public class iniciarComponentes extends JFrame {
 	private void iniciarBotones() {
 		
 		qtyMonedas = new JTextField();		
-		qtyMonedas.setBounds(340, 100, 180, 20);		
+		qtyMonedas.setBounds(340, 100, 180, 20);	
+		qtyMonedas.setVisible(false);
 		panel.add(qtyMonedas);
+		
+		JLabel intro = new JLabel(new ImageIcon("intro.jpg"));		
+		intro.setBounds(184, 10, 490, 340);
+		panel.add(intro);
 		
 		// boton seleccion de conversor moneda
 		JButton botonMoneda = new JButton();
 		botonMoneda.setBounds(55, 140, 80, 80);
 		ImageIcon imgbtnMoneda = new ImageIcon("iconCoin.jpg");
-		botonMoneda.setIcon(new ImageIcon(imgbtnMoneda.getImage().getScaledInstance(botonMoneda.getWidth(), botonMoneda.getHeight(),Image.SCALE_SMOOTH)));
+		botonMoneda.setIcon(new ImageIcon(imgbtnMoneda.getImage().getScaledInstance(botonMoneda.getWidth(), botonMoneda.getHeight(),Image.SCALE_SMOOTH)));		
 		panel.add(botonMoneda);
 
 		// boton seleccion de conversor temperatura
@@ -135,22 +131,69 @@ public class iniciarComponentes extends JFrame {
 		// boton aceptar
 		JButton botonAceptar1 = new JButton();
 		botonAceptar1.setBounds(385, 130, 90, 20);
+		botonAceptar1.setVisible(false);
 		botonAceptar1.setText("Aceptar");		
-		panel.add(botonAceptar1);
+		panel.add(botonAceptar1);		
 		
-		//accionamiento de boton
-		ActionListener accionbtnconvertir = new ActionListener() {	
+		// Eventos de botones
+		
+		//Evento seleccionar conversor de monedas
+		ActionListener conversorMoneda = new ActionListener() {
 			
 			@Override
-			public void actionPerformed(ActionEvent e) {						
-				double cantidadMonedas = Double.parseDouble(qtyMonedas.getText());
-				if(listaDeOpciones.getSelectedItem().toString() == "Soles a Dolares") {					
-					JOptionPane.showMessageDialog(null,"La cantidad que obtendrás es:  " + String.format("%.2f",cantidadMonedas/3.82)+ " $USD");					
-				}
+			public void actionPerformed(ActionEvent e) {
+				qtyMonedas.setVisible(true);
+				botonAceptar1.setVisible(true);
+				listaDeOpciones.setVisible(true);
+				titleMontoIngresar.setText("Cantidad de dinero que deseas convertir");
+				intro.setVisible(false);
+				JLabel conversorMonedas = new JLabel(new ImageIcon("Monedas.jpg"));
+				conversorMonedas.setBounds(184, 10, 490, 340);//posicionando la etiqueta
+				panel.add(conversorMonedas);//agregando la etiqueta al panel				
+				
 			}
 		};
-		botonAceptar1.addActionListener(accionbtnconvertir);
+		botonMoneda.addActionListener(conversorMoneda);
 		
+		
+		//evento boton aceptar para convertir
+		ActionListener accionbtnconvertir = new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {				
+				if(listaDeOpciones.getSelectedItem().toString() == "Soles a Dolares") {					
+					JOptionPane.showMessageDialog(null,"La cantidad que obtendrás es:  " + String.format("%.2f",Double.parseDouble(qtyMonedas.getText())/3.82)+ " $ USD");					
+				}
+				else if(listaDeOpciones.getSelectedItem().toString() == "Soles a Euros") {					
+					JOptionPane.showMessageDialog(null,"La cantidad que obtendrás es:  " + String.format("%.2f",Double.parseDouble(qtyMonedas.getText())/4.03)+ " € Euros");					
+				}
+				else if(listaDeOpciones.getSelectedItem().toString() == "Soles a Libras Esterlinas") {					
+					JOptionPane.showMessageDialog(null,"La cantidad que obtendrás es:  " + String.format("%.2f",Double.parseDouble(qtyMonedas.getText())/4.56)+ " £ Libras");					
+				}
+				else if(listaDeOpciones.getSelectedItem().toString() == "Soles a Yen") {					
+					JOptionPane.showMessageDialog(null,"La cantidad que obtendrás es:  " + String.format("%.2f",Double.parseDouble(qtyMonedas.getText())/0.03)+ " ¥ Yenes");					
+				}
+				else if(listaDeOpciones.getSelectedItem().toString() == "Soles a Won Coreano") {					
+					JOptionPane.showMessageDialog(null,"La cantidad que obtendrás es:  " + String.format("%.2f",Double.parseDouble(qtyMonedas.getText())/0.00291)+ " Wones");					
+				}
+				else if(listaDeOpciones.getSelectedItem().toString() == "Dolares a Soles") {					
+					JOptionPane.showMessageDialog(null,"La cantidad que obtendrás es:  " + String.format("%.2f",Double.parseDouble(qtyMonedas.getText())*3.82)+ " Soles");					
+				}
+				else if(listaDeOpciones.getSelectedItem().toString() == "Euros a Soles") {					
+					JOptionPane.showMessageDialog(null,"La cantidad que obtendrás es:  " + String.format("%.2f",Double.parseDouble(qtyMonedas.getText())*4.03)+ " Soles");					
+				}
+				else if(listaDeOpciones.getSelectedItem().toString() == "Libras Esterlinas a Soles") {					
+					JOptionPane.showMessageDialog(null,"La cantidad que obtendrás es:  " + String.format("%.2f",Double.parseDouble(qtyMonedas.getText())*4.56)+ " Soles");					
+				}
+				else if(listaDeOpciones.getSelectedItem().toString() == "Yen a Soles") {					
+					JOptionPane.showMessageDialog(null,"La cantidad que obtendrás es:  " + String.format("%.2f",Double.parseDouble(qtyMonedas.getText())*0.03)+ " Soles");					
+				}
+				else if(listaDeOpciones.getSelectedItem().toString() == "Won Coreano a Soles") {					
+					JOptionPane.showMessageDialog(null,"La cantidad que obtendrás es:  " + String.format("%.2f",Double.parseDouble(qtyMonedas.getText())*0.00291)+ " Soles");					
+				}		
+			}
+		};
+		botonAceptar1.addActionListener(accionbtnconvertir);	
 	}
 		
 	
